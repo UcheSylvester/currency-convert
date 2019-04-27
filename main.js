@@ -292,7 +292,7 @@ function newCurrenciesListItem(currency) {
 addCurrencyList.addEventListener('click', addClickedCurrency);
 
 function addClickedCurrency(e) {
-  console.dir(e.target)
+  // console.dir(e.target)
   const clickedCurrency = e.target.closest('li');
 
   if(!clickedCurrency.classList.contains('disabled')) {
@@ -306,10 +306,14 @@ function addClickedCurrency(e) {
 currenciesList.addEventListener('click', removeClickedCurrency);
 
 function removeClickedCurrency(e) {
+  const currencyToRemove = e.target.parentElement;
+
   if(e.target.classList.contains('close')) {
-    const currencyToRemove = e.target.parentElement;
     currencyToRemove.remove();
   }
+  addCurrencyList.querySelector(`[data-currency=${currencyToRemove.id}]`).classList.remove("disabled")
+
+
 }
 
 
