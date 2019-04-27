@@ -7,25 +7,29 @@ let currencies = [
       name: "US Dollar",
       abbreviation: "USD",
       symbol: "\u0024",
-      flagURL: "http://www.geonames.org/flags/l/us.gif"
+	  flagURL: "http://www.geonames.org/flags/l/us.gif",
+	  rate: 1.234
     },
     {
       name: "Euro",
       abbreviation: "EUR",
       symbol: "\u20AC",
-      flagURL: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
-    },
+      flagURL: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg",
+	  rate: 1.4
+	},
     {
       name: "Japanese Yen",
       abbreviation: "JPY",
       symbol: "\u00A5",
-      flagURL: "http://www.geonames.org/flags/l/jp.gif"
+	  flagURL: "http://www.geonames.org/flags/l/jp.gif",
+	  rate: 1.234
     },
     {
       name: "British Pound",
       abbreviation: "GBP",
       symbol: "\u00A3",
-      flagURL: "http://www.geonames.org/flags/l/uk.gif"
+	  flagURL: "http://www.geonames.org/flags/l/uk.gif",
+	  rate: 1.4
     },
     {
       name: "Australian Dollar",
@@ -205,6 +209,10 @@ let currencies = [
   
 const addCurrencyBtn = document.querySelector('.add-currency-button');
 const addCurrencyList = document.querySelector('.add-currency-list');
+const currenciesList = document.querySelector('.currencies');
+const initiallyDisplayedCurrencies = ['USD', 'EUR', 'GBP', 'JPY'];
+
+let baseCurrency, baseCurrencyAmount;
 
 // Functions
 
@@ -212,7 +220,55 @@ const addCurrencyList = document.querySelector('.add-currency-list');
 function addCurrencyBtnClicked(e) {
     addCurrencyBtn.classList.toggle('open');
     addCurrencyList.classList.toggle('open');
+    populateAddCurrencyList()
 }
+
+// showing currencies on the add currencies list
+function populateAddCurrencyList() {
+
+    // looping through currencies array and displaying them on the addCurrencyList
+    currencies.forEach(currency => {
+        console.log(currency.flagURL, currency.name)
+        const html = `
+            <li data-currency="${currency.abbreviation}">
+            <img src="${currency.flagURL}" alt="${currency.name} flag" class="flag">
+            <span> ${currency.name} </span>    
+            </li>
+        `
+        addCurrencyList.insertAdjacentHTML('beforeend', html)
+    })
+}
+
+// To display some currencies at the start of the app
+function populateCurrenciesList() {
+    // check for matches for initiallyDisplayedCurrencies in currencies
+    initiallyDisplayedCurrencies.forEach(currency => {
+        const matchedCurrencies = currencies
+                              .find(match => match.abbreviation === currency);
+        console.log(matchedCurrencies);
+
+        if(matchedCurrencies) newCurrenciesListItem(matchedCurrencies);
+    })
+}
+
+
+function newCurrenciesListItem(currency) {
+  if(currenciesList.childElementCount === 0) {
+    baseCurrency = currency.abbreviation;
+    baseCurrencyAmount = 0;
+    // populateCurrenciesList();
+  }
+
+  // disabling click on currencies added for conversion
+  addCurrencyList.querySelector(`[data-currency='${currency.abbreviation}']`).classList.add('disabled')
+  const baseCurrencyRate = currencies.find(currency => currency.abbreviation === baseCurrency).rate;
+
+//   calculating exchange rate using tenary method
+const exchangeRate = currency.abbreviation === baseCurrency ? 1 : (currency.rate/baseCurrencyRate).toFixed(4);
+
+}
+
+populateCurrenciesList()
 
 // EVENT LISTENERS
 

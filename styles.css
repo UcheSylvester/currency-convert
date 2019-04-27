@@ -138,7 +138,7 @@ ul.add-currency-list {
     /* height: 0; */
     overflow-y: auto;
     display: none;
-    transition: all 0.23s
+    transition: all 0.7s
 }
 
 ul.add-currency-list li {
