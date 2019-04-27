@@ -259,31 +259,31 @@ function newCurrenciesListItem(currency) {
     baseCurrencyAmount = 0;
   }
 
-  // disabling click on currencies added for conversion
+  // disabling selecting currency on currencies added for conversion
   addCurrencyList.querySelector(`[data-currency=${currency.abbreviation}]`).classList.add("disabled")
   
   const baseCurrencyRate = currencies.find(currency => currency.abbreviation === baseCurrency).rate;
 
-//   calculating exchange rate using tenary method
-const exchangeRate = (currency.abbreviation === baseCurrency) ? 1 : (currency.rate/baseCurrencyRate).toFixed(4);
+  //   calculating exchange rate using tenary method
+    const exchangeRate = (currency.abbreviation === baseCurrency) ? 1 : (currency.rate/baseCurrencyRate).toFixed(4);
 
-const inputValue = baseCurrencyAmount ? (baseCurrencyAmount*exchangeRate).toFixed(4) : '';
+    const inputValue = baseCurrencyAmount ? (baseCurrencyAmount*exchangeRate).toFixed(4) : '';
 
-const htmlContent = `
-	<li class="currency" ${(currency.abbreviation === baseCurrency) ? "base-currency" : ''} id=${currency.abbreviation}>
-	<img src="${currency.flagURL}" alt="jp flag" class="flag">
-	<div class="info">
-		<p class="input">
-			<span class="currency-symbol">${currency.symbol}</span>
-			<input placeholder="0.00" value="${inputValue}">
-		</p>
-		<p class="currency-name">${currency.abbreviation} - ${currency.name}</p>
-		<p class="base-currency-rate">I ${baseCurrency} = ${exchangeRate} ${currency.symbol}</p>
-	</div>
-	<span class="close">&times;</span>
-</li>
-` 
-currenciesList.insertAdjacentHTML('beforeend', htmlContent)
+    const htmlContent = `
+    <li class="currency" ${(currency.abbreviation === baseCurrency) ? "base-currency" : ''} id=${currency.abbreviation}>
+    <img src="${currency.flagURL}" alt="jp flag" class="flag">
+    <div class="info">
+      <p class="input">
+        <span class="currency-symbol">${currency.symbol}</span>
+        <input placeholder="0.00" value="${inputValue}">
+      </p>
+      <p class="currency-name">${currency.abbreviation} - ${currency.name}</p>
+      <p class="base-currency-rate">I ${baseCurrency} = ${exchangeRate} ${currency.symbol}</p>
+    </div>
+    <span class="close">&times;</span>
+  </li>
+  ` 
+  currenciesList.insertAdjacentHTML('beforeend', htmlContent)
 
 }
 
