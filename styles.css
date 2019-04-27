@@ -14,7 +14,7 @@ body {
 .container {
     width: 500px;
     margin: 20px auto;
-
+    height: 100vh;
 }
 
 header {
@@ -35,9 +35,10 @@ header h1 {
 }
 
 ul.currencies {
-    height: 500px;
+    height: calc(100vh - 10rem - 40px);
     background-color: #222;
     padding: 0 1.5rem 1rem 1.5rem;
+    overflow-y: auto;
 }
 
 ul.currencies li {
@@ -46,9 +47,69 @@ ul.currencies li {
     list-style: none;
     padding: 0.5em;
     margin-bottom: 0.5em;
-
+    position: relative;
 }
 
+ul li.base-currency {
+    background-color: #00b386;
+}
+
+.flag {
+    height: 40px;
+    width: 60px;
+    border: 1.5px solid white;
+    vertical-align: top;
+}
+
+.info {
+    display: inline-block;
+    width: 78%;
+}
+
+.info .input span {
+    display: inline-block;
+    font-size: 1.5rem;
+    width: 3rem;
+    text-align: center;
+}
+
+.info .currency-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 3rem;
+    margin-bottom: 0.25rem;
+}
+
+.info .base-currency-rate {
+    font-size: 0.8rem;
+    margin-left: 3rem;
+    font-style: italic;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.info .input input {
+    font-size: 1.4rem;
+    width: 75%;
+    border: 1px solid #fff;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #fff;
+    padding: 0.25rem;
+    margin-bottom: 0.75rem
+}
+
+ul.currencies li .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 0.55rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+ ul.currencies li .close:hover {
+     color: #fff;
+ }
 .add-currency-button {
     background-color: #00b386;
     color: #fff;
