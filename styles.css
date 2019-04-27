@@ -15,6 +15,8 @@ body {
     width: 500px;
     margin: 20px auto;
     height: 100vh;
+    position: relative;
+    user-select: none;
 }
 
 header {
@@ -34,6 +36,7 @@ header h1 {
     text-align: right;
 }
 
+/* Currency container */
 ul.currencies {
     height: calc(100vh - 10rem - 40px);
     background-color: #222;
@@ -107,9 +110,65 @@ ul.currencies li .close {
     cursor: pointer;
     color: #666;
 }
- ul.currencies li .close:hover {
-     color: #fff;
- }
+
+ul.currencies li .close:hover {
+    color: #fff;
+}
+
+/* Scroll bar */
+ul.currencies::-webkit-scrollbar {
+    width: 5px;
+}
+
+ul.currencies::-webkit-scrollbar-thumb {
+    background-color: #07503e;
+}
+
+
+/* add currency list */
+
+ul.add-currency-list {
+    position: absolute;
+    bottom: 57px;
+    left: 0;
+    background-color: #f1f1f1;
+    color: #222;
+    width: 100%;
+    height: calc(100vh - 12.5rem);
+    /* height: 0; */
+    overflow-y: auto;
+    /* display: none; */
+    transition: 0.23s
+}
+
+ul.add-currency-list li {
+    list-style: none;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+}
+
+ul.add-currency-list li:hover {
+    background-color: #222;
+    color: #f1f1f1;
+}
+
+/* disable when currency already exist */
+ul.add-currency-list li.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ul.add-currency-list li .flag {
+    width: 3rem;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+ul.add-currency-list li span {
+    margin-left: 3rem;
+    font-weight: bold;
+}
+
 .add-currency-button {
     background-color: #00b386;
     color: #fff;
@@ -120,4 +179,52 @@ ul.currencies li .close {
     border: none;
     outline: none;
     cursor: pointer;
+    position: relative;
+}
+
+.add-currency-button i {
+    position: absolute;
+    top: 11px;
+    left: 30%;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: all 0.25s;
+}
+
+.add-currency-button:hover {
+    background-color: rgb(218, 44, 44)
+}
+
+/* .add-currency-button.open {
+    background-color: rgb(218, 44, 44)
+} */
+
+.add-currency-button:hover i {
+    opacity: 1;
+    left: 1.25rem;
+}
+
+.add-currency-button:hover + ul.add-currency-list {
+    height: calc(100vh - 200px);
+}
+
+
+/* MEDIA QUERIES FOR RESPONSIVESNESS */
+@media (max-width: 600px) {
+    html { font-size: 14px; }
+    .container { width: 100%; margin: 0 auto; }
+    ul.currencies { height: calc(100vh - 83px - 34px - 51px); }
+    .header h1 { font-size: 2rem; }
+    .flag { width: 3rem; height: 2rem; }
+    .info .input span { font-size: 1.25rem; width: 3.5rem; }
+    .info .input input { font-size: 1.25rem; width: 76%;}
+    .info .currency-name { margin-left: 3.5rem; }
+    .info .base-currency-rate { margin-left: 3.5rem; }
+    ul.add-currency-list { bottom: 6px; height: calc(100vh - 80px - 51px); }
+    .add-currency-btn i { left: 25%; top:0.65rem; }
+}
+
+@media (max-width: 361px) {
+    ul.add-currency-list { bottom: -5px; height: calc(100vh - 80px - 81px); }
+      
 }
