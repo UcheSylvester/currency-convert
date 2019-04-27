@@ -1,4 +1,3 @@
-console.log('working..');
 
 // GLOBAL VARIABLEAS
 
@@ -209,6 +208,7 @@ let currencies = [
   
 const addCurrencyBtn = document.querySelector('.add-currency-button');
 const addCurrencyList = document.querySelector('.add-currency-list');
+// console.log(addCurrencyList)
 const currenciesList = document.querySelector('.currencies');
 const initiallyDisplayedCurrencies = ['USD', 'EUR', 'GBP', 'JPY'];
 
@@ -228,26 +228,27 @@ function populateAddCurrencyList() {
 
     // looping through currencies array and displaying them on the addCurrencyList
     currencies.forEach(currency => {
-        console.log(currency.flagURL, currency.name)
+        // console.log(currency.flagURL, currency.name)
         const html = `
-            <li data-currency="${currency.abbreviation}">
+            <li data-currency=${currency.abbreviation}>
             <img src="${currency.flagURL}" alt="${currency.name} flag" class="flag">
             <span> ${currency.name} </span>    
             </li>
         `
         addCurrencyList.insertAdjacentHTML('beforeend', html)
+
     })
 }
+console.log(addCurrencyList)
 
 // To display some currencies at the start of the app
 function populateCurrenciesList() {
     // check for matches for initiallyDisplayedCurrencies in currencies
     initiallyDisplayedCurrencies.forEach(currency => {
-        const matchedCurrencies = currencies
-                              .find(match => match.abbreviation === currency);
-        console.log(matchedCurrencies);
+        const matchedCurrency = currencies.find(c => c.abbreviation === currency);
+        // console.log(matchedCurrency);
 
-        if(matchedCurrencies) newCurrenciesListItem(matchedCurrencies);
+        if(matchedCurrency) newCurrenciesListItem(matchedCurrency);
     })
 }
 
@@ -256,17 +257,37 @@ function newCurrenciesListItem(currency) {
   if(currenciesList.childElementCount === 0) {
     baseCurrency = currency.abbreviation;
     baseCurrencyAmount = 0;
-    // populateCurrenciesList();
   }
 
   // disabling click on currencies added for conversion
-  addCurrencyList.querySelector(`[data-currency='${currency.abbreviation}']`).classList.add('disabled')
+  addCurrencyList.querySelector(`[data-currency=${currency.abbreviation}]`).classList.add("disabled")
+  
   const baseCurrencyRate = currencies.find(currency => currency.abbreviation === baseCurrency).rate;
 
 //   calculating exchange rate using tenary method
-const exchangeRate = currency.abbreviation === baseCurrency ? 1 : (currency.rate/baseCurrencyRate).toFixed(4);
+const exchangeRate = (currency.abbreviation === baseCurrency) ? 1 : (currency.rate/baseCurrencyRate).toFixed(4);
+
+const inputValue = baseCurrencyAmount ? (baseCurrencyAmount*exchangeRate).toFixed(4) : '';
+
+const htmlContent = `
+	<li class="currency" ${(currency.abbreviation === baseCurrency) ? "base-currency" : ''} id=${currency.abbreviation}>
+	<img src="${currency.flagURL}" alt="jp flag" class="flag">
+	<div class="info">
+		<p class="input">
+			<span class="currency-symbol">${currency.symbol}</span>
+			<input placeholder="0.00" value="${inputValue}">
+		</p>
+		<p class="currency-name">${currency.abbreviation} - ${currency.name}</p>
+		<p class="base-currency-rate">I ${baseCurrency} = ${exchangeRate} ${currency.symbol}</p>
+	</div>
+	<span class="close">&times;</span>
+</li>
+` 
+currenciesList.insertAdjacentHTML('beforeend', htmlContent)
 
 }
+
+populateAddCurrencyList()
 
 populateCurrenciesList()
 
