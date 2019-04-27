@@ -280,16 +280,12 @@ function newCurrenciesListItem(currency) {
       <p class="currency-name">${currency.abbreviation} - ${currency.name}</p>
       <p class="base-currency-rate">I ${baseCurrency} = ${exchangeRate} ${currency.symbol}</p>
     </div>
-    <span class="close">&times;</span>
+    <span class="close" title="Remove">&times;</span>
   </li>
   ` 
   currenciesList.insertAdjacentHTML('beforeend', htmlContent)
 
 }
-
-
-
-// console.log(addCurrencyList);
 
 
 // adding new currencies for conversion
@@ -305,6 +301,19 @@ function addClickedCurrency(e) {
   }
 }
 
+
+// removing currencies from list
+currenciesList.addEventListener('click', removeClickedCurrency);
+
+function removeClickedCurrency(e) {
+  if(e.target.classList.contains('close')) {
+    const currencyToRemove = e.target.parentElement;
+    currencyToRemove.remove();
+  }
+}
+
+
+// Calling functions
 populateAddCurrencyList()
 
 populateCurrenciesList()
