@@ -210,7 +210,7 @@ const addCurrencyBtn = document.querySelector('.add-currency-button');
 const addCurrencyList = document.querySelector('.add-currency-list');
 // console.log(addCurrencyList)
 const currenciesList = document.querySelector('.currencies');
-const initiallyDisplayedCurrencies = ['USD', 'EUR', 'GBP', 'JPY'];
+let initiallyDisplayedCurrencies = ['USD', 'EUR', 'GBP', 'JPY'];
 
 let baseCurrency, baseCurrencyAmount;
 
@@ -239,7 +239,7 @@ function populateAddCurrencyList() {
 
     })
 }
-console.log(addCurrencyList)
+
 
 // To display some currencies at the start of the app
 function populateCurrenciesList() {
@@ -252,7 +252,7 @@ function populateCurrenciesList() {
     })
 }
 
-
+// The list of new currencies to be displayed for conversion
 function newCurrenciesListItem(currency) {
   if(currenciesList.childElementCount === 0) {
     baseCurrency = currency.abbreviation;
@@ -285,6 +285,24 @@ function newCurrenciesListItem(currency) {
   ` 
   currenciesList.insertAdjacentHTML('beforeend', htmlContent)
 
+}
+
+
+
+// console.log(addCurrencyList);
+
+
+// adding new currencies for conversion
+addCurrencyList.addEventListener('click', addClickedCurrency);
+
+function addClickedCurrency(e) {
+  console.dir(e.target)
+  const clickedCurrency = e.target.closest('li');
+
+  if(!clickedCurrency.classList.contains('disabled')) {
+    const newCurrency = currencies.find(c => c.abbreviation === clickedCurrency.getAttribute('data-currency'));
+    if(newCurrency) newCurrenciesListItem(newCurrency)
+  }
 }
 
 populateAddCurrencyList()
