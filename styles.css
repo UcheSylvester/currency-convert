@@ -130,15 +130,15 @@ ul.currencies::-webkit-scrollbar-thumb {
 ul.add-currency-list {
     position: absolute;
     bottom: 57px;
-    left: 0;
+    left: 105%;
     background-color: #f1f1f1;
     color: #222;
     width: 100%;
     height: calc(100vh - 12.5rem);
     /* height: 0; */
     overflow-y: auto;
-    /* display: none; */
-    transition: 0.23s
+    display: none;
+    transition: all 0.23s
 }
 
 ul.add-currency-list li {
@@ -191,18 +191,25 @@ ul.add-currency-list li span {
     transition: all 0.25s;
 }
 
-.add-currency-button:hover {
-    background-color: rgb(218, 44, 44)
-}
-
-/* .add-currency-button.open {
+/* .add-currency-button:hover {
     background-color: rgb(218, 44, 44)
 } */
 
-.add-currency-button:hover i {
+.add-currency-button.open {
+    background-color: rgb(218, 44, 44);
+}
+
+.add-currency-button.open i {
     opacity: 1;
     left: 1.25rem;
 }
+
+ul.add-currency-list.open {
+    display: block;
+    left: 0;
+}
+
+.add
 
 .add-currency-button:hover + ul.add-currency-list {
     height: calc(100vh - 200px);
