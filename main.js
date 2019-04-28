@@ -311,12 +311,17 @@ function removeClickedCurrency(e) {
   if(e.target.classList.contains('close')) {
     currencyToRemove.remove();
   }
+  // making the removed currency clickable on the addCurrencyList
   addCurrencyList.querySelector(`[data-currency=${currencyToRemove.id}]`).classList.remove("disabled");
 
   // setting a new base currency;
   if(currencyToRemove.classList.contains('base-currency')) {
     const newBaseCurrencyLI = currenciesList.querySelector('.currency');
-    if(newBaseCurrencyLI) setNewBaseCurrency(newBaseCurrencyLI)
+    if(newBaseCurrencyLI) {
+      setNewBaseCurrency(newBaseCurrencyLI);
+      // setting base currency amount for the new base currency to it's input
+      baseCurrencyAmount = Number(newBaseCurrencyLI.querySelector('.input input'))
+    }
   }
 
 }
@@ -335,6 +340,10 @@ function setNewBaseCurrency(newBaseCurrencyLI) {
     currencyLI.querySelector('.base-currency-rate').textContent = `I ${baseCurrency} = ${exchangeRate} ${currencyLI.id}`; 
   })
 }
+
+// what happens when there is value is  inputed
+currencies.addEventListener('input', currenciesListInputChange);
+
 
 // Calling functions
 populateAddCurrencyList()
