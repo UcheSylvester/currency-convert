@@ -270,7 +270,7 @@ function newCurrenciesListItem(currency) {
     const inputValue = baseCurrencyAmount ? (baseCurrencyAmount*exchangeRate).toFixed(4) : '';
 
     const htmlContent = `
-    <li class="currency" ${(currency.abbreviation === baseCurrency) ? "base-currency" : ''} id=${currency.abbreviation}>
+    <li class="currency ${(currency.abbreviation === baseCurrency) ? "base-currency" : ''}" id=${currency.abbreviation}>
     <img src="${currency.flagURL}" alt="jp flag" class="flag">
     <div class="info">
       <p class="input">
@@ -311,11 +311,30 @@ function removeClickedCurrency(e) {
   if(e.target.classList.contains('close')) {
     currencyToRemove.remove();
   }
-  addCurrencyList.querySelector(`[data-currency=${currencyToRemove.id}]`).classList.remove("disabled")
+  addCurrencyList.querySelector(`[data-currency=${currencyToRemove.id}]`).classList.remove("disabled");
 
+  // setting a new base currency;
+  if(currencyToRemove.classList.contains('base-currency')) {
+    const newBaseCurrencyLI = currenciesList.querySelector('.currency');
+    if(newBaseCurrencyLI) setNewBaseCurrency(newBaseCurrencyLI)
+  }
 
 }
 
+// working on new baseCurrency
+function setNewBaseCurrency(newBaseCurrencyLI) {
+  newBaseCurrencyLI.classList.add('base-currency');
+  baseCurrency = newBaseCurrencyLI.id;
+  const baseCurrencyRate = currencies.find(currency => currency.abbreviation === baseCurrency).rate;
+  
+  // editing the contents to match the new base currency
+  const currenciesLI = currenciesList.querySelectorAll('.currency');
+  currenciesLI.forEach(currencyLI => {
+    const currencyRate = currencies.find(c => c.abbreviation = currencyLI.id).rate;
+    const exchangeRate = (currencyLI.abbreviation === baseCurrency) ? 1 : (currencyRate/baseCurrencyRate).toFixed(4);
+    currencyLI.querySelector('.base-currency-rate').textContent = `I ${baseCurrency} = ${exchangeRate} ${currencyLI.id}`; 
+  })
+}
 
 // Calling functions
 populateAddCurrencyList()
